@@ -50,12 +50,18 @@ python scripts/train_forecaster.py --config configs/base.yaml
 python scripts/run_backtest.py --config configs/base.yaml
 python scripts/optimise_squad.py --config configs/base.yaml
 python scripts/run_agent_weekly.py --config configs/base.yaml
+python scripts/run_ingestion.py --config configs/base.yaml
+python scripts/build_features.py --config configs/base.yaml
 ```
 
 ## Notebooks
 
 - Phase 1 transparency notebook:
 	- `notebooks/phase1_scaffold_data_quality.ipynb`
+- Phase 2 transparency notebook:
+	- `notebooks/phase2_ingestion_identity_data_quality.ipynb`
+- Phase 3 transparency notebook:
+	- `notebooks/phase3_feature_store_data_quality.ipynb`
 
 The notebook includes:
 - what was done
@@ -69,3 +75,7 @@ The notebook includes:
 - 2026-07-28: Core contracts added for forecast, optimiser, and agent outputs.
 - 2026-07-28: Baseline tests and integration smoke flow added.
 - 2026-07-28: Phase 1 data quality notebook added.
+- 2026-07-28: Phase 2 ingestion adapters, fail-soft pipeline, and identity resolution implemented.
+- 2026-07-28: Phase 2 data quality notebook and tests added.
+- 2026-07-28: Phase 3 leakage-safe feature store and chronological splitting implemented.
+- 2026-07-28: Phase 3 data quality notebook and tests added.

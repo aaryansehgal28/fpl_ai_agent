@@ -19,3 +19,10 @@ backtesting:
   discount_factor: 0.98
   start_season: 2022
   end_season: 2025
+
+features:
+  grain: player-season-gameweek
+  window_short: 3
+  window_long: 5
+  min_history: 3
+  availability_column: available_pre_deadline
