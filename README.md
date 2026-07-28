@@ -16,6 +16,7 @@ This repository is built in strict phases and stays runnable at each milestone.
 - Phase 4: CNN forecasting training/inference pipelines.
 - Phase 5: Multi-horizon optimisation.
 - Phase 6: MDP agent and offline policy evaluation.
+- Phase 8: Post-build hardening and productionization.
 
 ## Current Structure
 
@@ -62,6 +63,16 @@ python scripts/build_features.py --config configs/base.yaml
 	- `notebooks/phase2_ingestion_identity_data_quality.ipynb`
 - Phase 3 transparency notebook:
 	- `notebooks/phase3_feature_store_data_quality.ipynb`
+- Phase 4 transparency notebook:
+	- `notebooks/phase4_forecasting_data_quality.ipynb`
+- Phase 5 transparency notebook:
+	- `notebooks/phase5_optimisation_data_quality.ipynb`
+- Phase 6 transparency notebook:
+	- `notebooks/phase6_agent_data_quality.ipynb`
+- Phase 7 transparency notebook:
+	- `notebooks/phase7_final_verification_data_quality.ipynb`
+- Phase 8 transparency notebook:
+	- `notebooks/phase8_post_build_hardening_productionization.ipynb`
 
 The notebook includes:
 - what was done
@@ -79,3 +90,24 @@ The notebook includes:
 - 2026-07-28: Phase 2 data quality notebook and tests added.
 - 2026-07-28: Phase 3 leakage-safe feature store and chronological splitting implemented.
 - 2026-07-28: Phase 3 data quality notebook and tests added.
+- 2026-07-28: Phase 4 temporal CNN training and inference pipeline implemented.
+- 2026-07-28: Phase 4 data quality notebook and forecasting tests added.
+- 2026-07-28: Phase 5 multi-gameweek optimizer with transfer and chip logic implemented.
+- 2026-07-28: Phase 5 data quality notebook and optimisation tests added.
+- 2026-07-28: Phase 6 MDP agent with semi-autonomous weekly recommendations implemented.
+- 2026-07-28: Phase 6 offline policy evaluation and lineup/captain optimization tests added.
+- 2026-07-28: Phase 7 final backtesting engine and full verification completed.
+- 2026-07-28: Phase 8 hardening completed (validated config, structured logging, CI pipeline, productionization docs).
+
+## Productionization
+
+- CI workflow: `.github/workflows/ci.yml`
+- Hardening docs: `docs/productionization.md`
+
+Quality gate command set:
+
+```bash
+ruff check .
+mypy src
+pytest -q
+```

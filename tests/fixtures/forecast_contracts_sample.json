@@ -1,0 +1,9 @@
+[
+  {"player_id":"p_mid3","season":2024,"gameweek":10,"horizon":1,"expected_points":7.5,"uncertainty":1.8,"availability_probability":0.97,"model_version":"temporal_cnn_v1","generated_at":"2026-07-28T00:00:00+00:00"},
+  {"player_id":"p_mid3","season":2024,"gameweek":10,"horizon":2,"expected_points":7.2,"uncertainty":1.7,"availability_probability":0.97,"model_version":"temporal_cnn_v1","generated_at":"2026-07-28T00:00:00+00:00"},
+  {"player_id":"p_mid3","season":2024,"gameweek":10,"horizon":3,"expected_points":7.0,"uncertainty":1.7,"availability_probability":0.97,"model_version":"temporal_cnn_v1","generated_at":"2026-07-28T00:00:00+00:00"},
+
+  {"player_id":"p_fwd3","season":2024,"gameweek":10,"horizon":1,"expected_points":8.0,"uncertainty":1.9,"availability_probability":0.97,"model_version":"temporal_cnn_v1","generated_at":"2026-07-28T00:00:00+00:00"},
+  {"player_id":"p_fwd3","season":2024,"gameweek":10,"horizon":2,"expected_points":7.8,"uncertainty":1.8,"availability_probability":0.97,"model_version":"temporal_cnn_v1","generated_at":"2026-07-28T00:00:00+00:00"},
+  {"player_id":"p_fwd3","season":2024,"gameweek":10,"horizon":3,"expected_points":7.6,"uncertainty":1.8,"availability_probability":0.97,"model_version":"temporal_cnn_v1","generated_at":"2026-07-28T00:00:00+00:00"}
+]

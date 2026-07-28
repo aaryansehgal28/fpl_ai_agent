@@ -31,3 +31,6 @@ def test_build_temporal_windows_shape() -> None:
     assert result.x.shape[1] == 3
     assert result.x.shape[2] == len(feature_cols)
     assert result.y.shape[0] == result.x.shape[0]
+    assert len(result.player_ids) == result.x.shape[0]
+    assert len(result.seasons) == result.x.shape[0]
+    assert len(result.gameweeks) == result.x.shape[0]

@@ -15,6 +15,8 @@ class WindowedDataset:
     x: np.ndarray
     y: np.ndarray
     player_ids: list[str]
+    seasons: list[int]
+    gameweeks: list[int]
 
 
 def build_temporal_windows(
@@ -30,6 +32,8 @@ def build_temporal_windows(
     rows_x: list[np.ndarray] = []
     rows_y: list[float] = []
     player_ids: list[str] = []
+    seasons: list[int] = []
+    gameweeks: list[int] = []
 
     ordered = df.sort_values([player_col, time_col]).reset_index(drop=True)
     for player_id, grp in ordered.groupby(player_col, sort=False):
@@ -42,6 +46,8 @@ def build_temporal_windows(
             rows_x.append(values[idx - window_length : idx])
             rows_y.append(targets[idx])
             player_ids.append(str(player_id))
+            seasons.append(int(grp.loc[idx, "season"]))
+            gameweeks.append(int(grp.loc[idx, "gameweek"]))
 
     if not rows_x:
         x = np.empty((0, window_length, len(feature_cols)), dtype=float)
@@ -50,4 +56,10 @@ def build_temporal_windows(
         x = np.stack(rows_x)
         y = np.asarray(rows_y, dtype=float)
 
-    return WindowedDataset(x=x, y=y, player_ids=player_ids)
+    return WindowedDataset(
+        x=x,
+        y=y,
+        player_ids=player_ids,
+        seasons=seasons,
+        gameweeks=gameweeks,
+    )
