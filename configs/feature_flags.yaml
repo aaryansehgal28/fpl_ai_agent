@@ -1,0 +1,5 @@
+feature_flags:
+  use_splink_identity_resolution: false
+  enable_fail_soft_ingestion: true
+  enable_chip_planning: true
+  enable_rl_training: false

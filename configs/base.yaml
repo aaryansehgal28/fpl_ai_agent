@@ -1,0 +1,21 @@
+project:
+  name: fpl_ai_agent
+  timezone: UTC
+  random_seed: 42
+
+storage:
+  raw_dir: data/raw
+  canonical_dir: data/canonical
+  features_dir: data/features
+  forecasts_dir: data/forecasts
+  duckdb_path: data/fpl.duckdb
+
+forecasting:
+  window_length: 6
+  horizon: 1
+  target: fpl_points_next_gw
+
+backtesting:
+  discount_factor: 0.98
+  start_season: 2022
+  end_season: 2025
