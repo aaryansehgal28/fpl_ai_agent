@@ -20,6 +20,8 @@ class OptimisationSettings:
     squad_size: int = 15
     max_from_team: int = 3
     position_quota: dict[str, int] | None = None
+    position_score_weights: dict[str, float] | None = None
+    position_risk_weights: dict[str, float] | None = None
     value_signal_weight: float = 0.0
     fixture_difficulty_weight: float = 0.0
     injury_risk_weight: float = 0.0
@@ -30,6 +32,24 @@ class OptimisationSettings:
         if self.position_quota is not None:
             return self.position_quota
         return {"GK": 2, "DEF": 5, "MID": 5, "FWD": 3}
+
+    def normalized_position_score_weights(self) -> dict[str, float]:
+        """Return per-position score multipliers for expected value terms."""
+        defaults = {"GK": 1.0, "DEF": 1.0, "MID": 1.0, "FWD": 1.0}
+        if self.position_score_weights is None:
+            return defaults
+        merged = defaults.copy()
+        merged.update({k: float(v) for k, v in self.position_score_weights.items()})
+        return merged
+
+    def normalized_position_risk_weights(self) -> dict[str, float]:
+        """Return per-position multipliers for uncertainty penalty terms."""
+        defaults = {"GK": 1.0, "DEF": 1.0, "MID": 1.0, "FWD": 1.0}
+        if self.position_risk_weights is None:
+            return defaults
+        merged = defaults.copy()
+        merged.update({k: float(v) for k, v in self.position_risk_weights.items()})
+        return merged
 
 
 @dataclass(slots=True)
@@ -144,14 +164,20 @@ def optimize_squad(
     prob += paid_transfers >= transfers_made_expr - transfer_context.free_transfers - settings.squad_size * transfer_waiver_chip
     prob += paid_transfers <= settings.squad_size * (1 - transfer_waiver_chip)
 
+    position_score_weights = settings.normalized_position_score_weights()
+    position_risk_weights = settings.normalized_position_risk_weights()
+
     expected_value = pulp.lpSum(
         x[i]
         * compute_discounted_value(players[i].expected_points_horizon[: settings.horizon_weeks], settings.discount_factor)
         * players[i].availability_probability
+        * position_score_weights.get(players[i].position, 1.0)
         for i in player_idx
     )
     risk_value = pulp.lpSum(
-        x[i] * compute_discounted_risk(players[i].uncertainty_horizon[: settings.horizon_weeks], settings.discount_factor)
+        x[i]
+        * compute_discounted_risk(players[i].uncertainty_horizon[: settings.horizon_weeks], settings.discount_factor)
+        * position_risk_weights.get(players[i].position, 1.0)
         for i in player_idx
     )
 

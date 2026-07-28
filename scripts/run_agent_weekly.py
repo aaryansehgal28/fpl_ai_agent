@@ -49,6 +49,8 @@ def main() -> None:
         risk_aversion=cfg.optimisation.risk_aversion,
         budget=cfg.optimisation.budget,
         max_from_team=cfg.optimisation.max_from_team,
+        position_score_weights=cfg.optimisation.position_score_weights,
+        position_risk_weights=cfg.optimisation.position_risk_weights,
     )
     context = TransferContext(
         current_squad_ids=set(),

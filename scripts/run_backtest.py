@@ -51,6 +51,8 @@ def main() -> None:
         budget=cfg.optimisation.budget,
         squad_size=cfg.optimisation.squad_size,
         max_from_team=cfg.optimisation.max_from_team,
+        position_score_weights=cfg.optimisation.position_score_weights,
+        position_risk_weights=cfg.optimisation.position_risk_weights,
     )
 
     result = run_walk_forward_backtest(

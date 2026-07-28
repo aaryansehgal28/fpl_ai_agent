@@ -101,3 +101,94 @@ def test_chip_bonus_support() -> None:
         ),
     )
     assert result.chip_used == "bench_boost"
+
+
+def test_position_risk_weight_changes_defender_choice() -> None:
+    pytest.importorskip("pulp", reason="pulp required")
+
+    players = [
+        OptimiserInputContract(
+            player_id="gk_safe",
+            player_name="GK Safe",
+            team="ARS",
+            position="GK",
+            cost=5.0,
+            expected_points_horizon=[5.0, 5.0, 5.0],
+            uncertainty_horizon=[0.6, 0.6, 0.6],
+            availability_probability=1.0,
+            transfer_context={},
+        ),
+        OptimiserInputContract(
+            player_id="def_risky",
+            player_name="DEF Risky",
+            team="LIV",
+            position="DEF",
+            cost=5.0,
+            expected_points_horizon=[7.0, 7.0, 7.0],
+            uncertainty_horizon=[2.4, 2.4, 2.4],
+            availability_probability=1.0,
+            transfer_context={},
+        ),
+        OptimiserInputContract(
+            player_id="def_safe",
+            player_name="DEF Safe",
+            team="MCI",
+            position="DEF",
+            cost=5.0,
+            expected_points_horizon=[6.2, 6.2, 6.2],
+            uncertainty_horizon=[0.6, 0.6, 0.6],
+            availability_probability=1.0,
+            transfer_context={},
+        ),
+        OptimiserInputContract(
+            player_id="mid_safe",
+            player_name="MID Safe",
+            team="CHE",
+            position="MID",
+            cost=5.0,
+            expected_points_horizon=[5.8, 5.8, 5.8],
+            uncertainty_horizon=[0.6, 0.6, 0.6],
+            availability_probability=1.0,
+            transfer_context={},
+        ),
+        OptimiserInputContract(
+            player_id="fwd_safe",
+            player_name="FWD Safe",
+            team="TOT",
+            position="FWD",
+            cost=5.0,
+            expected_points_horizon=[5.8, 5.8, 5.8],
+            uncertainty_horizon=[0.6, 0.6, 0.6],
+            availability_probability=1.0,
+            transfer_context={},
+        ),
+    ]
+
+    common_kwargs = {
+        "horizon_weeks": 3,
+        "budget": 30.0,
+        "squad_size": 4,
+        "max_from_team": 3,
+        "position_quota": {"GK": 1, "DEF": 1, "MID": 1, "FWD": 1},
+    }
+    low_def_penalty = optimize_squad(
+        players,
+        settings=OptimisationSettings(
+            **common_kwargs,
+            risk_aversion=0.3,
+            position_risk_weights={"GK": 1.0, "DEF": 0.5, "MID": 1.0, "FWD": 1.0},
+        ),
+        transfer_context=TransferContext(current_squad_ids=set(), free_transfers=1),
+    )
+    high_def_penalty = optimize_squad(
+        players,
+        settings=OptimisationSettings(
+            **common_kwargs,
+            risk_aversion=0.3,
+            position_risk_weights={"GK": 1.0, "DEF": 2.0, "MID": 1.0, "FWD": 1.0},
+        ),
+        transfer_context=TransferContext(current_squad_ids=set(), free_transfers=1),
+    )
+
+    assert "def_risky" in set(low_def_penalty.selected_player_ids)
+    assert "def_safe" in set(high_def_penalty.selected_player_ids)

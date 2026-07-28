@@ -50,6 +50,8 @@ class OptimisationConfig(BaseModel):
     risk_aversion: float = Field(ge=0)
     squad_size: int = Field(ge=1)
     max_from_team: int = Field(ge=1)
+    position_score_weights: dict[str, float] | None = None
+    position_risk_weights: dict[str, float] | None = None
     wildcard_bonus: float = 0.0
     free_hit_bonus: float = 0.0
     bench_boost_bonus: float = 0.0

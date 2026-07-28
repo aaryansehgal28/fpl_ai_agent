@@ -38,6 +38,16 @@ optimisation:
   risk_aversion: 0.15
   squad_size: 15
   max_from_team: 3
+  position_score_weights:
+    GK: 1.0
+    DEF: 1.0
+    MID: 1.03
+    FWD: 1.06
+  position_risk_weights:
+    GK: 1.1
+    DEF: 1.0
+    MID: 1.0
+    FWD: 0.95
   wildcard_bonus: 0.5
   free_hit_bonus: 0.5
   bench_boost_bonus: 0.5
